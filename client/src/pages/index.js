@@ -1,0 +1,1 @@
+export { default as Products } from 'src/pages/products/Products';
