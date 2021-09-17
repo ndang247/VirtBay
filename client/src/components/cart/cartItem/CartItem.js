@@ -5,7 +5,7 @@ import {
     CardContent, CardMedia
 } from '@material-ui/core';
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item, handleUpdateQty, handleRemoveFromCart }) => {
     const classes = useStyles();
 
     return (
@@ -13,19 +13,30 @@ const CartItem = ({ item }) => {
             <CardMedia image={item.media.source} alt={item.name} className={classes.media} />
             <CardContent className={classes.cardContent}>
                 <Typography variant='h5'>{item.name}</Typography>
-                <Typography variant='h5'>{item.price.formatted_with_symbol}</Typography>
+                <Typography variant='h5'>{item.line_total.formatted_with_symbol}</Typography>
             </CardContent>
             <CardActions className={classes.cartActions}>
                 <div className={classes.buttons}>
-                    <Button disableElevation={true} type='button' size='small'>-</Button>
+                    <Button
+                        disableElevation={true}
+                        type='button'
+                        size='small'
+                        onClick={() => handleUpdateQty(item.id, item.quantity - 1)}
+                    >-</Button>
                     <Typography>{item.quantity}</Typography>
-                    <Button disableElevation={true} type='button' size='small'>+</Button>
+                    <Button
+                        disableElevation={true}
+                        type='button'
+                        size='small'
+                        onClick={() => handleUpdateQty(item.id, item.quantity + 1)}
+                    >+</Button>
                 </div>
                 <Button
                     disableElevation={true}
                     variant='contained'
                     type='button'
                     color='secondary'
+                    onClick={() => handleRemoveFromCart(item.id)}
                 >
                     Remove
                 </Button>

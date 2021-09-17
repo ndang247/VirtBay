@@ -3,3 +3,7 @@ export { default as NavBar } from './navbar/NavBar';
 export { default as EmptyCart } from './cart/EmptyCart';
 export { default as FilledCart } from './cart/FilledCart';
 export { default as CartItem } from './cart/cartItem/CartItem';
+export { default as CheckoutForm } from './checkoutForm/CheckoutForm';
+export { default as AddressForm } from './checkoutForm/AddressForm';
+export { default as PaymentForm } from './checkoutForm/PaymentForm';
+export { default as FormInput } from './checkoutForm/FormInput';
