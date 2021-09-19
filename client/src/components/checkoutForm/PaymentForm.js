@@ -1,12 +1,12 @@
 import React from 'react';
-import { Typography, Button, Divider, Card } from '@material-ui/core';
+import { Typography, Button, Divider } from '@material-ui/core';
 import { Elements, CardElement, ElementsConsumer } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { Review } from 'src/components';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-const PaymentForm = ({ shippingData, checkoutToken, backStep, handleCaptureCheckout, nextStep }) => {
+const PaymentForm = ({ shippingData, checkoutToken, backStep, handleCaptureCheckout, nextStep, timeOut }) => {
     const handleSubmit = async (e, elements, stripe) => {
         e.preventDefault();
         if (!elements || !stripe) return;
@@ -17,6 +17,7 @@ const PaymentForm = ({ shippingData, checkoutToken, backStep, handleCaptureCheck
 
         if (error) console.log(error);
         else {
+            console.log(shippingData);
             const orderData = {
                 line_items: checkoutToken.live.line_items,
                 customer: {
@@ -28,19 +29,28 @@ const PaymentForm = ({ shippingData, checkoutToken, backStep, handleCaptureCheck
                     name: 'Primary',
                     street: shippingData.address1,
                     town_city: shippingData.city,
-                    country_state: shippingData.shippingSubdivision,
                     postal_zip_code: shippingData.zipOrPostal,
-                    country: shippingData.country,
+                    county_state: shippingData.shippingSubdivision,
+                    country: shippingData.shippingCountry
                 },
-                fulfilment: { shipping_method: shippingData.shippingOption },
+                fulfillment: { shipping_method: shippingData.shippingOption },
                 payment: {
                     gateway: 'stripe',
                     stripe: {
                         payment_method_id: paymentMethod.id
                     }
+                },
+                billing: {
+                    name: `${shippingData.firstName} ${shippingData.lastName}`,
+                    street: shippingData.address1,
+                    town_city: shippingData.city,
+                    postal_zip_code: shippingData.zipOrPostal,
+                    county_state: shippingData.shippingSubdivision,
+                    country: shippingData.shippingCountry
                 }
             }
             handleCaptureCheckout(checkoutToken.id, orderData);
+            timeOut();
             nextStep();
         }
     }

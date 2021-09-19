@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     AppBar, Toolbar, IconButton, Badge,
-    MenuItem, Menu, Typography
+    Menu, MenuItem, Typography
 } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 import logo from 'src/assets/images/logo.png';
@@ -9,8 +9,36 @@ import useStyles from './navBarStyles';
 import { Link, useLocation } from 'react-router-dom';
 
 const NavBar = ({ cart }) => {
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
     const classes = useStyles();
     const location = useLocation();
+
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const handleMobileMenuClose = () => setMobileMoreAnchorEl(null);
+
+    const mobileMenuId = 'menu-mobile';
+
+    const renderMobileMenu = (
+        <Menu
+            anchorEl={mobileMoreAnchorEl}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            id={mobileMenuId}
+            keepMounted
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={isMobileMenuOpen}
+            onClose={handleMobileMenuClose}
+        >
+            <MenuItem>
+                <IconButton component={Link} to="/cart" aria-label="Show cart items" color="inherit">
+                    <Badge badgeContent={cart.total_items} color="secondary">
+                        <ShoppingCart />
+                    </Badge>
+                </IconButton>
+                <p>Cart</p>
+            </MenuItem>
+        </Menu>
+    );
 
     return (
         <>
@@ -32,6 +60,7 @@ const NavBar = ({ cart }) => {
                     )}
                 </Toolbar>
             </AppBar>
+            {renderMobileMenu}
         </>
     );
 }

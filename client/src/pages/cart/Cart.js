@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-    Container, Typography, Button, Grid
-} from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 import { EmptyCart, FilledCart } from 'src/components';
 import useStyles from './cartStyles';
 

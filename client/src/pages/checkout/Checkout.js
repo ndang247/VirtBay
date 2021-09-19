@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import useStyles from './checkoutStyles';
 import { CheckoutForm } from 'src/components';
 import { commerce } from 'src/lib/commerce';
+import { CssBaseline } from '@material-ui/core';
+// import { useHistory } from 'react-router-dom';
 
 const Checkout = ({ cart, order, handleCaptureCheckout, error }) => {
     const [checkoutToken, setCheckoutToken] = useState(null);
     const classes = useStyles();
+    // const history = useHistory();
 
     useEffect(() => {
         const generateToken = async () => {
@@ -14,6 +17,7 @@ const Checkout = ({ cart, order, handleCaptureCheckout, error }) => {
                 setCheckoutToken(token);
             } catch (error) {
                 console.log(error);
+                // history.push('/');
             }
         }
         generateToken();
@@ -21,12 +25,15 @@ const Checkout = ({ cart, order, handleCaptureCheckout, error }) => {
 
     return (
         <>
+            <CssBaseline />
             <div className={classes.toolbar} />
-            {checkoutToken && <CheckoutForm
-                checkoutToken={checkoutToken}
-                order={order}
-                handleCaptureCheckout={handleCaptureCheckout}
-                error={error} />}
+            {checkoutToken &&
+                <CheckoutForm
+                    checkoutToken={checkoutToken}
+                    order={order}
+                    handleCaptureCheckout={handleCaptureCheckout}
+                    error={error}
+                />}
         </>
     );
 }
