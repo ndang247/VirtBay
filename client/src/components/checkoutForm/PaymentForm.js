@@ -12,7 +12,7 @@ const PaymentForm = ({ shippingData, checkoutToken, backStep, handleCaptureCheck
 
     const calculateTotal = () => {
         const shipping = _.find(checkoutToken.live.shipping.available_options, { id: shippingData.shippingOption });
-        setTotal(Number(shipping.price.formatted) + Number(checkoutToken.live.subtotal.formatted));
+        setTotal(shipping.price.raw + checkoutToken.live.subtotal.raw);
     }
 
     useEffect(() => calculateTotal(), []);
