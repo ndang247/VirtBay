@@ -2,7 +2,7 @@
 ## About the project
 This is a personal side project.
 
-This is a Stream Chat-based API application uses React.js, HTML and CSS on the front-end and Express.js and Node.js on the back-end.
+This is a Commerce.js-based API application uses React.js, Material UI, HTML and CSS on the front-end.
 ## Running the project
 In terminal (linux-based or macOS)
 1. cd to client directory
